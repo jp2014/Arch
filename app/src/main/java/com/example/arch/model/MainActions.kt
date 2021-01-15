@@ -1,6 +1,5 @@
 package com.example.arch.model
 
-import com.example.arch.model.MainViewModel
 import javax.inject.Inject
 
 sealed class MainOperation {

@@ -25,13 +25,14 @@ class MainUi @Inject constructor(private val mainActions: MainActions) {
     fun Top() {
         val viewModel = viewModel<MainViewModel>()
         val state = viewModel.state.collectAsState()
-        val doSomething =
+        val doSomething: () -> Unit = {
             mainActions.action(
                 MainOperation.DoSomething("something was done"),
                 viewModel
             )
+        }
 
-        Main(mainState = state.value, doSomething = { doSomething })
+        Main(mainState = state.value, doSomething = doSomething )
     }
 
     @Composable
