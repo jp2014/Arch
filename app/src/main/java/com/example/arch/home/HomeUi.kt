@@ -1,4 +1,4 @@
-package com.example.arch.ui
+package com.example.arch.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -11,10 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.ui.tooling.preview.Preview
-import com.example.arch.model.MainActions
-import com.example.arch.model.MainOperation
-import com.example.arch.model.MainState
-import com.example.arch.model.MainViewModel
+import com.example.arch.mvi.MviViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
@@ -22,43 +19,48 @@ import javax.inject.Inject
 class MainUi @Inject constructor(private val mainActions: MainActions) {
 
     @Composable
-    fun Top() {
-        val viewModel = viewModel<MainViewModel>()
+    fun Home() {
+        val viewModel: MviViewModel<HomeState, HomeIntent> = viewModel<HomeViewModel>()
+
         val state = viewModel.state.collectAsState()
         val doSomething: () -> Unit = {
             mainActions.action(
-                MainOperation.DoSomething("something was done"),
+                HomeOperation.DoSomething("something was done"),
                 viewModel
             )
         }
 
-        Main(mainState = state.value, doSomething = doSomething )
+        Main(homeState = state.value, doSomething = doSomething)
     }
 
     @Composable
-    fun Main(mainState: MainState, doSomething: () -> Unit) {
+    fun Main(homeState: HomeState, doSomething: () -> Unit) {
         val topPadding = Modifier.padding(top = 8.dp)
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(mainState.title, modifier = topPadding)
+            Text(homeState.title, modifier = topPadding)
             Button(
                 modifier = topPadding,
-                onClick =  doSomething
+                onClick = doSomething
             ) {
                 Text("Do something")
             }
-            if (mainState.loading)
+            if (homeState.loading)
                 CircularProgressIndicator(modifier = topPadding)
         }
     }
 }
 
+/**
+ * Preview is currently broken w/ the latest compose libs. I've tested this w/ a clean project.
+ * There is a fix planned for late Jan 2021
+ */
 @Preview
 @Composable
 private fun MainUiPreview() {
     val mainUi = MainUi(MainActions())
     Column {
         mainUi.Main(
-            mainState = MainState()
+            homeState = HomeState()
         ) {}
     }
 }
