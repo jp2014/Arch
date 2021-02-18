@@ -2,10 +2,10 @@ package com.example.arch
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.ui.platform.setContent
+import androidx.activity.compose.setContent
+import androidx.compose.material.Scaffold
 import com.example.arch.home.MainUi
 import com.example.arch.player.PlayerUi
 import dagger.hilt.android.AndroidEntryPoint
