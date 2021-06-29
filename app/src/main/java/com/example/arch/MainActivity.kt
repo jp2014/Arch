@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             MyApplicationTheme {
                 Scaffold(
                     topBar = { TopAppBar(title = { Text("Arch Demo") }) },
-                    bodyContent = { mainUi.Home() }
+                    content = { mainUi.Home() }
                 )
             }
         }
